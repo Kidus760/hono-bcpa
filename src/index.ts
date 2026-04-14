@@ -38,7 +38,7 @@ app.post('/signup', async (c) => {
     } else {
       body.id= (users.length + 1).toString()
       users.push(body)
-      return c.json(body, 201)
+      return c.json({ id: body.id, name: body.name, email: body.email }, 201)
     }
 
 });
@@ -46,7 +46,7 @@ app.post('/signin', async (c) => {
     const body = await c.req.json()
     const user = users.find((users) => users.email.toLowerCase() === body.email.toLowerCase())
     if (!user) {
-      return c.json({ message: 'user or password is' }, 404)
+      return c.json({ message: 'user dont exist' }, 404)
     } if (user.password !== body.password) {
       return c.json({ message: 'Incorrect password' }, 401)
     } 
